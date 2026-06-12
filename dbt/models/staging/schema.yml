@@ -1,0 +1,13 @@
+version: 2
+
+models:
+
+  - name: stg_purchases
+
+    columns:
+
+      - name: purchase_id
+
+        tests:
+          - unique
+          - not_null

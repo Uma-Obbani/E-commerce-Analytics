@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: auto1
+    database: analytics-engineering-464208
+    schema: analytics_engineering_auto1
+
+    tables:
+      - name: raw_purchases
+
+      - name: raw_vehicles
+
+      - name: raw_branches
+
+      - name: raw_changelog_purchase_at_branch
+      - name: int_finance_uuid_iban

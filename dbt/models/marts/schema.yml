@@ -1,0 +1,35 @@
+version: 2
+
+version: 2
+
+models:
+  - name: fct_purchase_iban_change
+    description: Fact table containing post-purchase IBAN changes enriched with vehicle and market information.
+
+    columns:
+    
+
+      - name: car_id
+        description: Vehicle identifier.
+        tests:
+          - not_null
+
+      - name: purchase_datetime
+        description: Timestamp when the vehicle purchase occurred.
+        tests:
+          - not_null
+
+      - name: iban_before_last4
+        description: Last four digits of the IBAN before finance change.
+        tests:
+          - not_null
+
+      - name: iban_after_last4
+        description: Last four digits of the IBAN after finance change.
+        tests:
+          - not_null
+
+      - name: change_event_datetime
+        description: Timestamp when finance UUID changed.
+        tests:
+          - not_null

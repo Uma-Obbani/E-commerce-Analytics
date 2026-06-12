@@ -1,0 +1,22 @@
+
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# Reports
+*.xlsx
+
+# dbt
+dbt/logs/
+dbt/target/
+dbt/dbt_packages/
+
+# IDE
+.vscode/
+# Pytest
+.pytest_cache/

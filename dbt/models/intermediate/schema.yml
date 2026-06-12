@@ -1,0 +1,12 @@
+version: 2
+
+models:
+
+  - name: int_purchase_finance_changes
+
+    columns:
+
+      - name: car_id
+
+        tests:
+          - not_null
