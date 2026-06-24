@@ -1,168 +1,467 @@
-# Analytics Engineering Case Study
+# 🛒 E-Commerce AI Analytics Copilot
 
-## Overview
+An end-to-end modern data platform that transforms raw e-commerce data into AI-powered customer intelligence using **BigQuery, dbt, Gemini, RAG, Vector Search, and Streamlit**.
 
-This project demonstrates an end-to-end Analytics Engineering pipeline using Python, FastAPI, BigQuery, and dbt.
-
-The solution identifies post-purchase bank account changes by analyzing Finance UUID transitions, enriching finance identifiers through a simulated banking API, comparing previous and updated IBAN values, and generating GDPR-safe stakeholder reports.
-
-The pipeline includes asynchronous API enrichment, dbt transformations, data quality checks, and automated country-level report distribution.
+The platform enables business users to ask natural language questions about customers, churn risk, customer value, and marketing recommendations.
 
 ---
 
-## Technology Stack
+## 🚀 Project Overview
 
-- Python 3.11
-- FastAPI
-- Google BigQuery
-- dbt
-- Pandas
-- OpenPyXL
-- Gmail SMTP
-- Pre-commit
+This project demonstrates a complete Analytics Engineering + AI workflow:
 
----
-
-# Project Architecture
-
-The workflow consists of three main layers:
-
-## 1. Transformation Pipeline (dbt)
-
-1. Standardize source datasets using staging models.
-2. Identify valid post-purchase Finance UUID changes.
-3. Consolidate old and new Finance UUIDs into a deduplicated enrichment queue.
-4. Join enriched IBAN information to detect account changes.
-5. Create reporting-ready mart tables.
-
----
-
-## 2. Async Enrichment Pipeline
-
-1. Read distinct Finance UUIDs from BigQuery.
-2. Process UUIDs asynchronously in batches.
-3. Call FastAPI mock banking enrichment service.
-4. Apply retry handling for failed batches.
-5. Validate requested vs returned record counts.
-6. Load enriched results into BigQuery.
-
----
-
-## 3. Reporting Pipeline
-
-1. Retrieve IBAN change records from BigQuery.
-2. Generate country-specific Excel reports.
-3. Expose only the last four IBAN digits for GDPR compliance.
-4. Distribute reports automatically through email.
-
----
-
-# Folder Structure
-
-analytics-engineering/
-
-├── dbt/
-│   ├── models/
-│   │   ├── staging/
-│   │   ├── intermediate/
-│   │   └── marts/
-│
-├── src/
-│   └── app/
-│       ├── clients/
-│       │   ├── bigquery_client.py
-│       │   └── api_client.py
-│       │
-│       ├── config/
-│       │   └── settings.py
-│       │
-│       ├── reporting/
-│       │   └── reports.py
-│       │
-│       ├── services/
-│       │   ├── transformation_service.py
-│       │   └── batch_service.py
-│       │
-│       ├── enrichment_job.py
-│       ├── iban_router.py
-│       └── main.py
-│
-├── raw/
-├── docs/
-├── tests/
-├── README.md
-└── requirements.txt
+- Data ingestion
+- Cloud data warehouse modeling
+- dbt transformations
+- Data quality testing
+- Customer intelligence marts
+- AI-ready semantic layer
+- RAG pipeline
+- Conversational analytics interface
 
 
 ---
 
-# Running the Application
+## 🏗️ Architecture
 
-## Start FastAPI Service
 
-```bash
-cd src
+```
+                 Data Sources
 
-uvicorn app.main:app --reload
-cd src
+        Customers | Orders | Products | Campaigns
 
-python -m app.enrichment_job
+                         |
+                         ▼
+
+                  BigQuery Raw Layer
+
+                         |
+                         ▼
+
+                     dbt Core
+
+                         |
+
+        ┌─────────────────────────────────┐
+        │                                 │
+        ▼                                 ▼
+
+   Staging Models                 Intermediate Models
+
+   stg_customers                  int_customer_metrics
+   stg_orders                     int_customer_engagement
+   stg_campaigns                  int_campaign_performance
+
+
+                         |
+                         ▼
+
+                    Data Marts
+
+             customer_intelligence
+
+             campaign_intelligence
+
+             mart_customer_360
+
+             mart_ai_marketing_copilot
+
+
+                         |
+                         ▼
+
+                  AI / RAG Layer
+
+
+          Gemini Embeddings
+
+                  |
+                  ▼
+
+          Chroma Vector Database
+
+                  |
+                  ▼
+
+             RAG Engine
+
+                  |
+                  ▼
+
+            Gemini LLM
+
+                  |
+                  ▼
+
+          Streamlit AI Copilot
+
 ```
 
-## Data Quality & Reliability
+---
 
-Data quality and reliability controls are implemented across dbt transformations and the enrichment pipeline.
+# 🛠️ Tech Stack
 
-### dbt Data Quality Checks
+## Data Engineering
 
-* Not Null validation
-* Unique key validation
-* Accepted values validation
-* Referential integrity checks
+- Python 3.11
+- Google Cloud Platform
+- BigQuery
 
-### Pipeline Reliability Controls
+## Analytics Engineering
 
-* Finance UUID validation
-* Duplicate Finance UUID removal before enrichment
-* API authentication validation
-* Asynchronous batch processing
-* Batch-level retry handling (3 retry attempts)
-* Requested vs returned record reconciliation
-* Branch and country completeness validation for stakeholder reporting
+- dbt Core
+- dbt BigQuery Adapter
+- dbt Tests
+- dbt Documentation
+
+## AI Engineering
+
+- Gemini Embeddings
+- LangChain
+- Chroma Vector Database
+- Retrieval Augmented Generation (RAG)
+
+## Application Layer
+
+- Streamlit
+
 
 ---
 
-## Reporting Output
+# 📁 Project Structure
 
-The monthly reporting process generates GDPR-safe stakeholder reports.
 
-Generated outputs include:
+```
+E-commerce Analytics
 
-* Market-specific IBAN change reports
-* One Excel workbook per country/market
-* Only the last four digits of IBAN values exposed
-* Automated email distribution to stakeholders
+│
+├── dbt/
+│   |
+│   ├── models/
+│   │
+│   ├── staging/
+│   ├── intermediate/
+│   └── marts/
+│        |
+│        └── ai/
+│             ├── customer_intelligence.sql
+│             ├── customer_score.sql
+│             ├── llm_context_text.sql
+│             ├── mart_customer_360.sql
+│             └── mart_ai_marketing_copilot.sql
+│
+│
+├── ai_engine/
+│
+│   ├── bigquery_client.py
+│   ├── embeddings.py
+│   ├── rag_engine.py
+│   └── prompts.py
+│
+│
+├── streamlit_app/
+│
+│   └── app.py
+│
+│
+├── requirements.txt
+├── README.md
+└── .env
 
-Generated reports are attached to stakeholder emails.
-
-In a production implementation, reports would additionally be archived in centralized storage locations such as Google Cloud Storage, SharePoint, or S3 to support:
-
-* Auditability
-* Historical access
-* Report re-distribution
+```
 
 ---
 
-## Future Improvements
+# 🔄 Data Pipeline Flow
 
-* Incremental processing using finance change timestamp
-* IBAN history tracking using valid_from / valid_to periods
-* Pipeline execution audit tables
-* Report generation history tracking
-* Delivery status monitoring
-* Data quality exception reporting for missing market mappings
-* Production banking API integration
-* Monitoring and alerting
-* CI/CD pipeline using GitHub Actions
-* Cloud Scheduler orchestration
-* Docker containerization
+
+## 1. Raw Data
+
+E-commerce datasets:
+
+- Customers
+- Orders
+- Products
+- Campaigns
+- User activity
+
+
+---
+
+## 2. dbt Transformation Layer
+
+
+### Staging Layer
+
+Cleans and standardizes raw tables.
+
+
+Example:
+
+```
+raw_customers
+
+        ↓
+
+stg_customers
+
+```
+
+---
+
+### Intermediate Layer
+
+
+Creates reusable business logic:
+
+
+- Customer engagement
+- Purchase behavior
+- Campaign metrics
+
+
+---
+
+### Mart Layer
+
+
+Business-ready datasets:
+
+
+### Customer Intelligence
+
+
+Features:
+
+
+- Customer Lifetime Value
+- Purchase behavior
+- Engagement segment
+- Churn indicators
+- Customer priority score
+
+
+---
+
+# 🤖 AI Layer
+
+
+## AI Context Generation
+
+
+dbt creates LLM-ready text:
+
+
+Example:
+
+
+```
+Customer 1024 is a premium customer.
+High lifetime value.
+Low churn risk.
+Recommended campaign: Loyalty offer.
+```
+
+
+---
+
+## Embeddings
+
+
+Generated using Gemini:
+
+
+```
+Customer Text
+
+      ↓
+
+Gemini Embedding Model
+
+      ↓
+
+Vector Representation
+
+      ↓
+
+Chroma Database
+
+```
+
+---
+
+# 🔎 RAG Workflow
+
+
+User asks:
+
+
+```
+Which customers are likely to churn?
+```
+
+
+Process:
+
+
+```
+Question
+
+   ↓
+
+Vector Search
+
+   ↓
+
+Retrieve similar customer profiles
+
+   ↓
+
+Gemini LLM
+
+   ↓
+
+Business recommendation
+
+```
+
+
+Example output:
+
+
+```
+High risk customers:
+
+Customer 2041
+
+Reason:
+- Low engagement
+- No recent orders
+
+Recommended Action:
+Send win-back campaign
+
+```
+
+---
+
+# 💬 Streamlit AI Copilot
+
+
+Run application:
+
+
+```bash
+streamlit run streamlit_app/app.py
+```
+
+
+Users can ask:
+
+
+- Which customers may churn?
+- Who are my highest value customers?
+- Recommend marketing actions
+- Which campaign should I prioritize?
+
+
+---
+
+# ⚙️ Setup
+
+
+Create environment:
+
+
+```bash
+python3.11 -m venv venv
+
+source venv/bin/activate
+```
+
+
+Install dependencies:
+
+
+```bash
+pip install -r requirements.txt
+```
+
+
+---
+
+# dbt Commands
+
+
+Test connection:
+
+
+```bash
+dbt debug
+```
+
+
+Run models:
+
+
+```bash
+dbt build
+```
+
+
+Generate docs:
+
+
+```bash
+dbt docs generate
+
+dbt docs serve
+```
+
+
+---
+
+# Build Vector Store
+
+
+```bash
+python -m ai_engine.embeddings
+```
+
+
+---
+
+# Start AI Copilot
+
+
+```bash
+streamlit run streamlit_app/app.py
+```
+
+
+---
+
+# Future Enhancements
+
+
+- BigQuery Vector Search
+- Vertex AI deployment
+- BigQuery ML churn prediction
+- Airflow orchestration
+- CI/CD pipeline
+- Docker + Cloud Run
+- Real-time event streaming
+
+
+---
+
+# Project Goal
+
+
+Build a production-style AI analytics platform combining:
+
+Data Engineering + Analytics Engineering + Generative AI
+
+```
+Raw Data → BigQuery → dbt → AI Marts → RAG → AI Copilot
+```

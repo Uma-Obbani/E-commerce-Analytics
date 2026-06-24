@@ -1,0 +1,34 @@
+version: 2
+
+
+models:
+
+  - name: stg_ab_tests
+    description: "Standardized customer experiment assignment and conversion data."
+
+    columns:
+
+      - name: experiment_id
+        description: "Unique experiment identifier."
+        tests:
+          - not_null
+
+
+      - name: customer_id
+        description: "Customer included in the experiment."
+        tests:
+          - not_null
+
+
+      - name: variant
+        description: "Experiment variant assigned to customer."
+        tests:
+          - not_null
+
+
+      - name: converted
+        description: "Flag showing whether customer converted."
+
+
+      - name: dbt_loaded_at
+        description: "Timestamp when dbt processed the record."

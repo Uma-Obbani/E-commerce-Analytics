@@ -1,0 +1,35 @@
+version: 2
+
+
+models:
+
+  - name: stg_orders
+    description: Cleaned customer order transactions
+
+
+    columns:
+
+      - name: order_id
+        description: Primary key for orders
+
+        tests:
+          - unique
+          - not_null
+
+
+      - name: customer_id
+
+        tests:
+          - not_null
+
+
+      - name: order_date
+
+        tests:
+          - not_null
+
+
+      - name: net_revenue
+
+        tests:
+          - not_null

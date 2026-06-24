@@ -1,0 +1,38 @@
+version: 2
+
+
+models:
+
+  - name: stg_email_campaigns
+    description: "Standardized customer email campaign engagement data."
+
+    columns:
+
+      - name: customer_id
+        description: "Customer receiving the email campaign."
+        tests:
+          - not_null
+
+
+      - name: send_date
+        description: "Date when the email was sent."
+        tests:
+          - not_null
+
+
+      - name: campaign_id
+        description: "Email marketing campaign identifier."
+        tests:
+          - not_null
+
+
+      - name: opened
+        description: "Flag indicating whether customer opened the email."
+
+
+      - name: clicked
+        description: "Flag indicating whether customer clicked the email."
+
+
+      - name: dbt_loaded_at
+        description: "Timestamp when dbt processed the record."

@@ -1,0 +1,39 @@
+version: 2
+
+
+models:
+
+  - name: stg_ga4_events
+    description: "Standardized GA4 customer event tracking data."
+
+    columns:
+
+      - name: event_id
+        description: "Unique identifier for each GA4 event."
+        tests:
+          - unique
+          - not_null
+
+
+      - name: customer_id
+        description: "Customer associated with the event."
+        tests:
+          - not_null
+
+
+      - name: event_date
+        description: "Date when the event occurred."
+        tests:
+          - not_null
+
+
+      - name: event_name
+        description: "Customer interaction type."
+
+
+      - name: traffic_source
+        description: "Original acquisition or traffic source."
+
+
+      - name: dbt_loaded_at
+        description: "Timestamp when dbt processed the record."

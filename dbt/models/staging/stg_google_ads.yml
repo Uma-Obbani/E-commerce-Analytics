@@ -1,0 +1,52 @@
+version: 2
+
+
+models:
+
+  - name: stg_google_ads
+    description: "Standardized Google Ads campaign performance data."
+
+    columns:
+
+      - name: date
+        description: "Campaign performance reporting date."
+        tests:
+          - not_null
+
+
+      - name: campaign_id
+        description: "Unique campaign identifier from Google Ads."
+        tests:
+          - not_null
+
+
+      - name: campaign_name
+        description: "Campaign name from advertising platform."
+
+
+      - name: channel
+        description: "Standardized marketing channel."
+        tests:
+          - not_null
+
+
+      - name: spend
+        description: "Advertising cost normalized as spend."
+        tests:
+          - not_null
+
+
+      - name: impressions
+        description: "Number of ad impressions."
+
+
+      - name: clicks
+        description: "Number of generated ad clicks."
+
+
+      - name: conversions
+        description: "Number of campaign conversions."
+
+
+      - name: dbt_loaded_at
+        description: "Timestamp when dbt processed the record."
