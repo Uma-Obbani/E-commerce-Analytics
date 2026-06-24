@@ -20,3 +20,4 @@ dbt/dbt_packages/
 .vscode/
 # Pytest
 .pytest_cache/
+.DS_Store
